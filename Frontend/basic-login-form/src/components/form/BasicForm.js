@@ -9,7 +9,7 @@ const schema = yup.object({
   password: yup.string().min(6).required(),
 });
 
-const BasicForm = () => {
+const BasicForm = (url) => {
   const {
     register,
     handleSubmit,
@@ -20,7 +20,7 @@ const BasicForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetchApi("http://localhost:3001/api/login", {
+      const response = await fetchApi(`${url}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
