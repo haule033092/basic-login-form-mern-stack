@@ -14,10 +14,6 @@ router.post("/register", async (req, res) => {
   const usernameExist = await User.findOne({ username: req.body.username });
   if (usernameExist) return res.status(400).send("Email exist!");
 
-  //Validate password
-  const passwordExist = await User.findOne({ password: req.body.password });
-  if (passwordExist) return res.status(400).send("Password exist!");
-
   //Hash password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
