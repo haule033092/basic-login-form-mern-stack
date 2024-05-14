@@ -12,11 +12,11 @@ const Login = () => {
   const handleFormSubmit = async (data) => {
     try {
       const response = await axios.post(`${API_URLS.LOGIN}`, {
-        username: data.username,
-        password: data.password,
+        username,
+        password,
       });
       console.log("Login successful!");
-      localStorage.setItem("token", response.data);
+      localStorage.setItem("token", response.data.token);
     } catch (error) {
       console.error("Error logging in:", error);
     }
@@ -35,12 +35,22 @@ const Login = () => {
       <h1 className="text-2xl font-bold">Login</h1>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <div>
-          <input id="username" type="text" {...register("username")} />
+          <input
+            id="username"
+            type="text"
+            {...register("username")}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           {errors.username && <p>{errors.username.message}</p>}
         </div>
 
         <div>
-          <input id="password" type="password" {...register("password")} />
+          <input
+            id="password"
+            type="password"
+            {...register("password")}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
         <button onClick={handleSubmit(handleFormSubmit)}>Login</button>
