@@ -11,7 +11,7 @@ const Register = () => {
 
   const handleFormSubmit = async (data) => {
     try {
-      await axios.post(`${API_URLS.LOGIN}`, {
+      await axios.post(`${API_URLS.REGISTER}`, {
         username,
         password,
       });
