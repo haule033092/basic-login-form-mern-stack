@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "../helpers/userCredentialSchema";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleFormSubmit = async (data) => {
     try {
@@ -17,6 +19,7 @@ const Login = () => {
       });
       console.log("Login successful!");
       localStorage.setItem("token", response.data.token);
+      navigate("/success");
     } catch (error) {
       console.error("Error logging in:", error);
     }

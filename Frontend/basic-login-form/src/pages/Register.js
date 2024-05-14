@@ -4,10 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "../helpers/userCredentialSchema";
 import API_URLS from "../components/api/apiUrl";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleFormSubmit = async (data) => {
     try {
@@ -16,6 +18,7 @@ const Register = () => {
         password,
       });
       console.log("Account created!");
+      navigate("/login");
     } catch (error) {
       console.error("Error creating account:", error);
     }
