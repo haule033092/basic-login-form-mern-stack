@@ -1,14 +1,62 @@
-import React from "react";
-import BasicForm from "../components/form/BasicForm";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import schema from "../helpers/userCredentialSchema";
+import API_URLS from "../components/api/apiUrl";
+import axios from "axios";
 
 const Register = () => {
-  const registerUrl =
-    "https://basic-login-form-mern-stack.onrender.com/api/user/register";
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleFormSubmit = async (data) => {
+    try {
+      await axios.post(`${API_URLS.LOGIN}`, {
+        username,
+        password,
+      });
+      console.log("Account created!");
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   return (
     <div>
       <h1 className="text-2xl font-bold">Register</h1>
-      <BasicForm url={registerUrl} />
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={handleSubmit(handleFormSubmit)}
+      >
+        <div>
+          <input
+            id="username"
+            type="text"
+            {...register("username")}
+            placeholder="Enter username or email"
+          />
+          {errors.username && <p>{errors.username.message}</p>}
+        </div>
+
+        <div>
+          <input
+            id="password"
+            type="password"
+            {...register("password")}
+            placeholder="Enter password"
+          />
+          {errors.password && <p>{errors.password.message}</p>}
+        </div>
+        <button type="submit">Register</button>
+      </form>
     </div>
   );
 };
