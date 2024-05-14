@@ -17,7 +17,7 @@ const Register = () => {
       });
       console.log("Account created!");
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.error("Error creating account:", error);
     }
   };
 
@@ -38,20 +38,22 @@ const Register = () => {
       >
         <div>
           <input
-            id="username"
+            name="username"
             type="text"
             {...register("username")}
             placeholder="Enter username or email"
+            onChange={(e) => setUsername(e.target.value)}
           />
           {errors.username && <p>{errors.username.message}</p>}
         </div>
 
         <div>
           <input
-            id="password"
+            name="password"
             type="password"
             {...register("password")}
             placeholder="Enter password"
+            onChange={(e) => setPassword(e.target.value)}
           />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
